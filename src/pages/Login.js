@@ -9,61 +9,40 @@ const Login = ({ onLoginSuccess, setIsLoggedIn }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-    let localUser = users[ssn];
-
-    if (!localUser) {
-      try {
-        const res = await axios.get("https://backend-c4xe.onrender.com/users");
-        const apiUsers = res.data;
-
-        const matchedUser = apiUsers.find((user) => user.SSN === ssn);
-
-        if (!matchedUser) {
-          setError("❌ SSN not found. Please sign up first.");
-          return;
-        }
-
-        if (matchedUser.password !== password) {
-          setError("❌ Incorrect password.");
-          return;
-        }
-
-        users[ssn] = {
-          id: matchedUser._id,
-          name: matchedUser.name,
-          password: matchedUser.password,
-        };
-        localStorage.setItem("users", JSON.stringify(users));
-        localUser = users[ssn];
-      } catch (error) {
-        console.error("❌ API Error:", error);
-        setError("❌ Failed to login. Try again later.");
+  
+    try {
+      const res = await axios.get("https://backend-c4xe.onrender.com/users");
+      const apiUsers = res.data;
+  
+      const matchedUser = apiUsers.find(
+        (user) => user.SSN === ssn && user.Password === password
+      );
+  
+      if (!matchedUser) {
+        setError("❌ Invalid SSN or password.");
         return;
       }
-    }
-
-    if (localUser.password !== password) {
-      setError("❌ Incorrect password.");
-      return;
-    }
-
-    localStorage.setItem("ssn", ssn);
-    localStorage.setItem("userId", localUser.id);
-    localStorage.setItem("userName", localUser.name);
-
-    if (onLoginSuccess) {
-      onLoginSuccess({
-        SSN: ssn,
-        id: localUser.id,
-        name: localUser.name,
-      });
-    }
-
-    // ✅ Trigger re-render in parent
-    if (setIsLoggedIn) {
-      setIsLoggedIn(true);
+  
+      // Save to localStorage
+      localStorage.setItem("ssn", ssn);
+      localStorage.setItem("userId", matchedUser._id);
+      localStorage.setItem("userName", matchedUser.Name);
+      localStorage.setItem("userPassword", matchedUser.Password);
+  
+      if (onLoginSuccess) {
+        onLoginSuccess({
+          SSN: ssn,
+          id: matchedUser._id,
+          name: matchedUser.Name,
+        });
+      }
+  
+      if (setIsLoggedIn) {
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.error("❌ API Error:", error);
+      setError("❌ Failed to login. Try again later.");
     }
   };
 
