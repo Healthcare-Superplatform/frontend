@@ -18,9 +18,11 @@ const SymptomChecker = () => {
   const [warning, setWarning] = useState("");
 
   useEffect(() => {
-    axios.get("/api/symptoms").then((res) => setSymptomsList(res.data));
+    axios.get("https://backend-c4xe.onrender.com/api/symptoms")
+      .then((res) => setSymptomsList(res.data))
+      .catch((err) => console.error("Error fetching symptoms:", err));
   }, []);
-
+  
   const toggleSymptom = (id) => {
     setSelectedSymptoms((prev) =>
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
