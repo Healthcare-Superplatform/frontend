@@ -17,24 +17,39 @@ const Signup = () => {
     const trimmedName = name.trim();
     const trimmedPassword = password.trim();
   
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || {};
+    try {
+      const response = await fetch('https://backend-c4xe.onrender.com/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: trimmedName,
+          ssn: trimmedSSN,
+          password: trimmedPassword
+        })
+      });
   
-    if (existingUsers[trimmedSSN]) {
-      setError("❌ SSN already exists. Try logging in.");
-      return;
+      const data = await response.json();
+  
+      if (response.ok) {
+        // ✅ Signup successful
+        // Optionally store basic user info if you want (e.g., for welcome message)
+        localStorage.setItem('userName', trimmedName);
+        localStorage.setItem('ssn', trimmedSSN);
+  
+        // ✅ Navigate to dashboard or login
+        navigate('/dashboard'); // or navigate('/login') if you prefer
+      } else {
+        // Backend will send the error message (like "SSN already exists")
+        setError(data.message || 'Signup failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Signup error', error);
+      setError('Something went wrong. Please try again.');
     }
+  };
   
-    const userId = Date.now().toString();
-    existingUsers[trimmedSSN] = {
-      id: userId,
-      name: trimmedName,
-      password: trimmedPassword
-    };
-  
-    localStorage.setItem("users", JSON.stringify(existingUsers));
-    localStorage.setItem("userId", userId);
-    localStorage.setItem("userName", trimmedName);
-    localStorage.setItem("ssn", trimmedSSN);
   
     // ✅ Navigate to dashboard after signup
     navigate("/dashboard");
