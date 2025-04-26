@@ -57,7 +57,7 @@ const Sidebar = () => {
 
   return (
     <nav className="sidebar" ref={sidebarRef} onScroll={handleScroll}>
-      <h2>🏥 SuperPlatform</h2>
+      <h2>🏥 MediChat</h2>
 
       {/* Toggle button */}
       <button

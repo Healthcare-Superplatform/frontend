@@ -53,7 +53,7 @@ const App = () => {
           <Sidebar />
           <div className="main-content">
             <Routes key={isLoggedIn ? 'auth' : 'guest'}>
-              <Route path="/" element={<Login />} />
+            <Route path="/" element={<AIHealthAssistantPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/feedback" element={<Feedback />} />

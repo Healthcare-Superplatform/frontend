@@ -34,7 +34,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1>🏥 SuperPlatform</h1>
+      <h1>🏥 MediChat</h1>
 
       {/* ✅ Show Logout Button Only If User Is Logged In */}
       {isLoggedIn && (
