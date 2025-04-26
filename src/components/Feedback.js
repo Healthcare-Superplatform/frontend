@@ -28,7 +28,7 @@ const Feedback = () => {
   const fetchAverageRating = async () => {
     try {
       const response = await axios.get('/api/feedback/average', {
-        baseURL: 'http://localhost:5001'
+        baseURL: 'https://backend-c4xe.onrender.com'
       });
       setAverageRating(response.data.averageRating);
       setTotalFeedbacks(response.data.totalCount);
@@ -90,7 +90,7 @@ const Feedback = () => {
       console.log('Request payload:', payload);
       
       const response = await axios.post('/api/feedback', payload, {
-        baseURL: 'http://localhost:5001',
+        baseURL: 'https://backend-c4xe.onrender.com',
         headers: {
           'Content-Type': 'application/json'
         }

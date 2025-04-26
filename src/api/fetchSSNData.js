@@ -4,7 +4,7 @@ import axios from "axios";
 const fetchSSNData = async (ssn, setMessages) => {
   try {
     const res = await axios.get(
-      `http://localhost:5001/own_medical?ssn=${encodeURIComponent(ssn)}`
+      `https://backend-c4xe.onrender.com/own_medical?ssn=${encodeURIComponent(ssn)}`
     );
     const data = res.data;
 
@@ -27,7 +27,7 @@ const fetchSSNData = async (ssn, setMessages) => {
     });
 
     const regionRes = await axios.get(
-      `http://localhost:5001/medical_list?location=${encodeURIComponent(Location)}`
+      `https://backend-c4xe.onrender.com/medical_list?location=${encodeURIComponent(Location)}`
     );
     const regionHospitals = regionRes.data;
 

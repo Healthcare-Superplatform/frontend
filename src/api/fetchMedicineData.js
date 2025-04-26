@@ -4,7 +4,7 @@ import axios from "axios";
 const fetchMedicineData = async (diseaseName, setMessages) => {
   try {
     const res = await axios.get(
-      `http://localhost:5001/search_medicine?disease=${encodeURIComponent(diseaseName)}`
+      `https://backend-c4xe.onrender.com/search_medicine?disease=${encodeURIComponent(diseaseName)}`
     );
     const medicines = res.data;
 
