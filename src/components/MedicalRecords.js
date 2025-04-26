@@ -37,7 +37,7 @@ const MedicalRecords = ({ filter, onRecordsLoaded }) => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/records/${ssn}`);
+        const response = await axios.get(`https://backend-c4xe.onrender.com/api/records/${ssn}`);
 
         if (!response.data || typeof response.data !== 'object') {
           throw new Error('Invalid data format received');
