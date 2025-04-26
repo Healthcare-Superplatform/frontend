@@ -33,22 +33,19 @@ const Signup = () => {
       const data = await response.json();
   
       if (response.ok) {
-        // ✅ Signup successful
-        // Optionally store basic user info if you want (e.g., for welcome message)
         localStorage.setItem('userName', trimmedName);
         localStorage.setItem('ssn', trimmedSSN);
   
-        // ✅ Navigate to dashboard or login
-        navigate('/dashboard'); // or navigate('/login') if you prefer
+        navigate('/dashboard');
       } else {
-        // Backend will send the error message (like "SSN already exists")
         setError(data.message || 'Signup failed. Please try again.');
       }
     } catch (error) {
       console.error('Signup error', error);
       setError('Something went wrong. Please try again.');
     }
-  };
+  }; // <<< CLOSE handleSignup function properly here!
+  
   
   
     // ✅ Navigate to dashboard after signup
