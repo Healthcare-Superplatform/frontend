@@ -64,7 +64,7 @@ const SymptomChecker = () => {
 
     setWarning("");
 
-    const res = await axios.post("/api/diagnosis", {
+    const res = await axios.post("https://backend-c4xe.onrender.com/api/diagnosis", {
       age,
       gender,
       symptoms: selectedSymptoms,
@@ -91,7 +91,7 @@ const SymptomChecker = () => {
       [followUpSymptomId]: ans,
     };
 
-    const res = await axios.post("/api/diagnosis", {
+    const res = await axios.post("https://backend-c4xe.onrender.com/api/diagnosis", {
       symptoms: selectedSymptoms,
       answer: ans,
       followUpSymptomId,
@@ -115,7 +115,7 @@ const SymptomChecker = () => {
 
   const getTriage = async () => {
     if (selectedSymptoms.length === 0) return;
-    const res = await axios.post("/api/triage", {
+    const res = await axios.post("https://backend-c4xe.onrender.com/api/triage", {
       age,
       gender,
       symptoms: selectedSymptoms,
@@ -125,7 +125,7 @@ const SymptomChecker = () => {
 
   const getExplanation = async () => {
     if (selectedSymptoms.length === 0) return;
-    const res = await axios.post("/api/explain", {
+    const res = await axios.post("https://backend-c4xe.onrender.com/api/explain", {
       symptoms: selectedSymptoms,
     });
     setExplanation(res.data.explanation);
