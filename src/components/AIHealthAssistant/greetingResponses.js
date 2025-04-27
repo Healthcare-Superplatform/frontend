@@ -22,9 +22,12 @@ const politeGreetingReplies = [
 ];
 
 export const isGreeting = (input) => {
-  const normalized = input.toLowerCase();
-  return greetingKeywords.some((greet) => normalized.includes(greet));
+  const normalized = input.toLowerCase().trim();
+  const words = normalized.split(/\s+/); // split into separate words
+
+  return words.some((word) => greetingKeywords.includes(word));
 };
+
 
 export const getGreetingResponse = () => {
   const randomIndex = Math.floor(Math.random() * politeGreetingReplies.length);

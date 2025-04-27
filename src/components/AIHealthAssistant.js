@@ -155,12 +155,18 @@ if (emergencyKeywords.some((kw) => lowerInput.includes(kw))) {
   return;
 }
 
-    if (isGreeting(lowerInput)) {
-      const greetingReply = getGreetingResponse();
-      setMessages((prev) => [...prev, { sender: "bot", type: "text", text: greetingReply }]);
-      speakText(greetingReply);
-      return;
-    }
+if (isGreeting(lowerInput)) {
+  // ✅ Extra check: ONLY reply greeting if user input is SHORT (like 1–3 words)
+  const wordCount = lowerInput.trim().split(/\s+/).length;
+  
+  if (wordCount <= 3) {  // small messages like "hi", "good morning", etc
+    const greetingReply = getGreetingResponse();
+    setMessages((prev) => [...prev, { sender: "bot", type: "text", text: greetingReply }]);
+    speakText(greetingReply);
+    return;
+  }
+}
+
     
     const recordKeywords = ["medical record", "records", "record", "medical records"];
     const healthKeywords = ["my health", "health info"];
