@@ -26,11 +26,14 @@ import HomeBasedCarePage from './pages/workforce/HomeBasedCarePage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import './styles/App.css';
+import './styles/Responsive.css';  
+import './styles/Sidebar.css';    
 import Feedback from './components/Feedback';
 import AuthContext from './context/AuthContext';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('ssn'));
+  const [sidebarOpen, setSidebarOpen] = useState(true); // 👉 For mobile toggle
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -46,14 +49,17 @@ const App = () => {
     setIsLoggedIn(false);
   };
 
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen); // 👉 Sidebar toggle
+
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
       <Router>
         <div className="page-layout">
-          <Sidebar />
+          {/* 👉 Pass toggle and state to Sidebar */}
+          <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
           <div className="main-content">
             <Routes key={isLoggedIn ? 'auth' : 'guest'}>
-            <Route path="/" element={<AIHealthAssistantPage />} />
+              <Route path="/" element={<AIHealthAssistantPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/feedback" element={<Feedback />} />
